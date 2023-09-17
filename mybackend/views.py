@@ -24,11 +24,9 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from rest_framework.parsers import FormParser
-from rest_framework import status, views
+from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
-from rest_framework.decorators import api_view
-from .models import UploadedFile
 from .models import Spectrum
 from .serializers import SpectrumSerializer
 from .serializers import UploadedFileSerializer
@@ -36,20 +34,11 @@ from .serializers import UserSerializer
 import pandas as pd
 from scipy import ndimage
 import scipy.signal
-from scipy.integrate import simps, trapz
-from scipy.signal import find_peaks
+from scipy.integrate import simps
 from scipy.signal import find_peaks as scipy_find_peaks
 from scipy.integrate import quad
-from scipy.optimize import curve_fit
 import matplotlib
 matplotlib.use('Agg')  # GUIが不要なバックエンド
-
-
-@csrf_exempt
-def my_view(request):
-    response = HttpResponse("Here's the text of the Web page.")
-    response['Access-Control-Allow-Origin'] = '*'
-    return response
 
 
 @csrf_exempt
