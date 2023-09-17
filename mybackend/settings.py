@@ -36,7 +36,7 @@ SECRET_KEY = "django-insecure-k8#-&(ytl$!c-vt9+j#ezk2ilq@#)1$5tezjcfa+xu8r(%z1$8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['near-infrared-backend-bbb7c59b8d9c.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -174,10 +174,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://your-github-page-url.com",
-    "https://your-heroku-app-name.herokuapp.com/",
+    "https://ryo121w.github.io",
+    "https://near-infrared-backend-bbb7c59b8d9c.herokuapp.com",
 ]
-

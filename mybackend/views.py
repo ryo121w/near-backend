@@ -718,7 +718,7 @@ class FileUploadView(APIView):
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
+
 def dynamic_graph_view(request):
     if request.method == "POST":
         # POSTリクエストの場合の処理
@@ -738,7 +738,6 @@ def dynamic_graph_view(request):
         return JsonResponse({"message": "Only POST method is allowed"}, status=400)
 
 
-@csrf_exempt  # CSRF対策を無効化（開発環境でのテスト用）
 def find_peaks(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -748,7 +747,6 @@ def find_peaks(request):
         return JsonResponse({'error': 'Only POST method is allowed'})
 
 
-@csrf_exempt
 def calculate_hb_strength(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -774,7 +772,6 @@ def calculate_area_for_intervals(data, x_data, intervals):
     return areas, peak_positions
 
 
-@csrf_exempt
 def advanced_spectrum_analysis(request):
     if request.method == 'POST':
         uploaded_file = request.FILES['data_file']
@@ -839,7 +836,6 @@ def perform_integral(data, lower, upper):
     return integral, error
 
 
-@csrf_exempt
 def gaussian_integral(request):
     if request.method == 'POST':
         uploaded_file = request.FILES['data_file']
@@ -887,7 +883,6 @@ def gaussian_integral(request):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class UserCreate(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
