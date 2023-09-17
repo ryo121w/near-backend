@@ -1,1 +1,1 @@
-web: gunicorn near-infrared-backend.wsgi
+web: gunicorn near_infrared_backend.wsgi
