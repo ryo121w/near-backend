@@ -47,12 +47,14 @@ import matplotlib
 matplotlib.use('Agg')  # GUIが不要なバックエンド
 
 
+
+@csrf_exempt
 def my_view(request):
     response = HttpResponse("Here's the text of the Web page.")
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
-
+@csrf_exempt
 class SpectrumViewSet(viewsets.ModelViewSet):
     queryset = Spectrum.objects.all().order_by('wavelength')
     serializer_class = SpectrumSerializer
@@ -60,7 +62,7 @@ class SpectrumViewSet(viewsets.ModelViewSet):
 
 logger = logging.getLogger(__name__)
 
-
+@csrf_exempt
 class SecondDerivativeGraphView(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -125,7 +127,7 @@ class SecondDerivativeGraphView(APIView):
         response_data = {'graph_url': os.path.join('static', graph_filename)}
         return JsonResponse(response_data)
 
-
+@csrf_exempt
 class SecondSaveDerivativeData(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -156,7 +158,7 @@ class SecondSaveDerivativeData(APIView):
         # ダウンロードURLを返す
         return JsonResponse({"success": True, "download_url": "/api/download_second_derivative_data/"})
 
-
+@csrf_exempt
 class DownloadSecondDerivativeData(APIView):
     def get(self, request):
         file_path = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Second_saved_files/second_derivative_data.xlsx"
@@ -169,7 +171,7 @@ class DownloadSecondDerivativeData(APIView):
         else:
             return HttpResponseBadRequest("File not found.")
 
-
+@csrf_exempt
 class ThirdDerivativeGraphView(APIView):
     permission_classes = [AllowAny]
 
@@ -236,7 +238,7 @@ class ThirdDerivativeGraphView(APIView):
         response_data = {'graph_url': os.path.join('static', graph_filename)}
         return JsonResponse(response_data)
 
-
+@csrf_exempt
 class ThirdSaveDerivativeData(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -267,7 +269,7 @@ class ThirdSaveDerivativeData(APIView):
 
         return JsonResponse({"success": True, "download_url": "/api/download_third_derivative_data/"})
 
-
+@csrf_exempt
 class DownloadThirdDerivativeData(APIView):
     def get(self, request):
         file_path = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Third_saved_files/third_derivative_data.xlsx"
@@ -280,7 +282,7 @@ class DownloadThirdDerivativeData(APIView):
         else:
             return HttpResponseBadRequest("File not found.")
 
-
+@csrf_exempt
 class FourthDerivativeGraphView(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -339,7 +341,7 @@ class FourthDerivativeGraphView(APIView):
         response_data = {'graph_url': os.path.join('static', graph_filename)}
         return JsonResponse(response_data)
 
-
+@csrf_exempt
 class FourthSaveDerivativeData(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -368,7 +370,7 @@ class FourthSaveDerivativeData(APIView):
 
         return JsonResponse({"success": True, "download_url": "/api/download_fourth_derivative_data/"})
 
-
+@csrf_exempt
 class DownloadFourthDerivativeData(APIView):
     def get(self, request):
         file_path = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Fourth_saved_files/fourth_derivative_data.xlsx"
@@ -381,7 +383,7 @@ class DownloadFourthDerivativeData(APIView):
         else:
             return HttpResponseBadRequest("File not found.")
 
-
+@csrf_exempt
 def get_most_recent_file(directory):
     try:
         files = [os.path.join(directory, f) for f in os.listdir(directory)]
@@ -392,7 +394,7 @@ def get_most_recent_file(directory):
 
 # API View to get the path of the most recently saved file
 
-
+@csrf_exempt
 class GetSavedFilePathView(APIView):
     def get(self, request, *args, **kwargs):
         saved_files_directory = 'saved_files'
@@ -405,11 +407,11 @@ class GetSavedFilePathView(APIView):
 
 logger = logging.getLogger(__name__)
 
-
+@csrf_exempt
 def generate_file_id():
     return str(uuid.uuid4().hex)
 
-
+@csrf_exempt
 class SaveMolarAbsorptivityView(APIView):
     parser_classes = [MultiPartParser]
 
@@ -445,7 +447,7 @@ class SaveMolarAbsorptivityView(APIView):
         except Exception as e:
             return Response({"file_saved": False, "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-
+@csrf_exempt
 def calculate_molar_absorptivity(df, water_concentrations, save_path):
     for col in df.columns:
         if re.match(r'\d+M$', col):
@@ -461,7 +463,7 @@ def calculate_molar_absorptivity(df, water_concentrations, save_path):
 
 SAVE_DIR = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Difference_saved_files/"
 
-
+@csrf_exempt
 class DifferenceGraphView(APIView):
     parser_classes = [MultiPartParser]
 
@@ -518,7 +520,7 @@ class DifferenceGraphView(APIView):
         image_url = f"http://localhost:8000/static/{image_filename}"
         return JsonResponse({"graph_url": image_url})
 
-
+@csrf_exempt
 class SaveDifferenceData(APIView):
     def post(self, request):
         # SAVE_DIRの確認
@@ -583,7 +585,7 @@ class SaveDifferenceData(APIView):
 
         return JsonResponse({"success": True, "download_url": "/api/download_difference_data/"})
 
-
+@csrf_exempt
 class DownloadDifferenceData(APIView):
     def get(self, request):
         file_path = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Difference_saved_files/difference_data.xlsx"
@@ -596,7 +598,7 @@ class DownloadDifferenceData(APIView):
         else:
             return HttpResponseBadRequest("File not found.")
 
-
+@csrf_exempt
 class ConcentrationGraphView(APIView):
     parser_class = (FileUploadParser,)
 
@@ -654,7 +656,7 @@ class ConcentrationGraphView(APIView):
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@csrf_exempt
 class FileUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
@@ -718,7 +720,7 @@ class FileUploadView(APIView):
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
+@csrf_exempt
 def dynamic_graph_view(request):
     if request.method == "POST":
         # POSTリクエストの場合の処理
@@ -737,7 +739,7 @@ def dynamic_graph_view(request):
         # GETリクエストの場合の処理（または他のHTTPメソッド）
         return JsonResponse({"message": "Only POST method is allowed"}, status=400)
 
-
+@csrf_exempt
 def find_peaks(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -746,7 +748,7 @@ def find_peaks(request):
     else:
         return JsonResponse({'error': 'Only POST method is allowed'})
 
-
+@csrf_exempt
 def calculate_hb_strength(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -756,11 +758,11 @@ def calculate_hb_strength(request):
     else:
         return JsonResponse({'error': 'Only POST method is allowed'})
 
-
+@csrf_exempt
 def find_zero_crossings(data):
     return np.where(np.diff(np.sign(data)))[0]
 
-
+@csrf_exempt
 def calculate_area_for_intervals(data, x_data, intervals):
     areas = []
     peak_positions = []
@@ -771,7 +773,7 @@ def calculate_area_for_intervals(data, x_data, intervals):
         peak_positions.append(peak_position)
     return areas, peak_positions
 
-
+@csrf_exempt
 def advanced_spectrum_analysis(request):
     if request.method == 'POST':
         uploaded_file = request.FILES['data_file']
@@ -824,18 +826,19 @@ def advanced_spectrum_analysis(request):
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
+@csrf_exempt
 # データのフィッティング
 def gaussian(x, amplitude, mean, stddev):
     return amplitude * np.exp(-((x - mean) / 4 / stddev)**2)
 
-
+@csrf_exempt
 def perform_integral(data, lower, upper):
     integral, error = quad(gaussian, lower, upper, args=(
         data['amplitude'], data['mean'], data['stddev']))
     return integral, error
 
 
+@csrf_exempt
 def gaussian_integral(request):
     if request.method == 'POST':
         uploaded_file = request.FILES['data_file']
@@ -883,6 +886,7 @@ def gaussian_integral(request):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class UserCreate(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
