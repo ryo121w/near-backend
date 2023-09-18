@@ -284,7 +284,6 @@ class DownloadThirdDerivativeData(APIView):
             return HttpResponseBadRequest("File not found.")
 
 
-@csrf_exempt
 class FourthDerivativeGraphView(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -374,7 +373,6 @@ class FourthSaveDerivativeData(APIView):
         return JsonResponse({"success": True, "download_url": "/api/download_fourth_derivative_data/"})
 
 
-@csrf_exempt
 class DownloadFourthDerivativeData(APIView):
     def get(self, request):
         file_path = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Fourth_saved_files/fourth_derivative_data.xlsx"
@@ -388,7 +386,6 @@ class DownloadFourthDerivativeData(APIView):
             return HttpResponseBadRequest("File not found.")
 
 
-@csrf_exempt
 def get_most_recent_file(directory):
     try:
         files = [os.path.join(directory, f) for f in os.listdir(directory)]
@@ -400,7 +397,6 @@ def get_most_recent_file(directory):
 # API View to get the path of the most recently saved file
 
 
-@csrf_exempt
 class GetSavedFilePathView(APIView):
     def get(self, request, *args, **kwargs):
         saved_files_directory = 'saved_files'
@@ -414,12 +410,10 @@ class GetSavedFilePathView(APIView):
 logger = logging.getLogger(__name__)
 
 
-@csrf_exempt
 def generate_file_id():
     return str(uuid.uuid4().hex)
 
 
-@csrf_exempt
 class SaveMolarAbsorptivityView(APIView):
     parser_classes = [MultiPartParser]
 
@@ -456,7 +450,6 @@ class SaveMolarAbsorptivityView(APIView):
             return Response({"file_saved": False, "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
 def calculate_molar_absorptivity(df, water_concentrations, save_path):
     for col in df.columns:
         if re.match(r'\d+M$', col):
@@ -473,7 +466,6 @@ def calculate_molar_absorptivity(df, water_concentrations, save_path):
 SAVE_DIR = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Difference_saved_files/"
 
 
-@csrf_exempt
 class DifferenceGraphView(APIView):
     parser_classes = [MultiPartParser]
 
@@ -531,7 +523,6 @@ class DifferenceGraphView(APIView):
         return JsonResponse({"graph_url": image_url})
 
 
-@csrf_exempt
 class SaveDifferenceData(APIView):
     def post(self, request):
         # SAVE_DIRの確認
@@ -597,7 +588,6 @@ class SaveDifferenceData(APIView):
         return JsonResponse({"success": True, "download_url": "/api/download_difference_data/"})
 
 
-@csrf_exempt
 class DownloadDifferenceData(APIView):
     def get(self, request):
         file_path = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Difference_saved_files/difference_data.xlsx"
@@ -611,7 +601,6 @@ class DownloadDifferenceData(APIView):
             return HttpResponseBadRequest("File not found.")
 
 
-@csrf_exempt
 class ConcentrationGraphView(APIView):
     parser_class = (FileUploadParser,)
 
@@ -670,7 +659,6 @@ class ConcentrationGraphView(APIView):
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
 class FileUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
