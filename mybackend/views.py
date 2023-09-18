@@ -25,7 +25,7 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from rest_framework.parsers import FormParser
-from rest_framework import status, views
+from rest_framework import status, viewsets
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
