@@ -9,6 +9,7 @@ from .views import FourthDerivativeGraphView
 from .views import dynamic_graph_view
 from .views import SaveMolarAbsorptivityView
 from .views import GetSavedFilePathView
+from .views import SecondDerivativeGraphView
 from .views import SecondSaveDerivativeData, DownloadSecondDerivativeData
 from .views import ThirdSaveDerivativeData, DownloadThirdDerivativeData
 from .views import FourthSaveDerivativeData, DownloadFourthDerivativeData

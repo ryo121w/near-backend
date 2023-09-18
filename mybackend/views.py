@@ -58,7 +58,6 @@ class SpectrumViewSet(viewsets.ModelViewSet):
     serializer_class = SpectrumSerializer
 
 
-@csrf_exempt
 class SecondDerivativeGraphView(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -124,7 +123,6 @@ class SecondDerivativeGraphView(APIView):
         return JsonResponse(response_data)
 
 
-@csrf_exempt
 class SecondSaveDerivativeData(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -156,7 +154,6 @@ class SecondSaveDerivativeData(APIView):
         return JsonResponse({"success": True, "download_url": "/api/download_second_derivative_data/"})
 
 
-@csrf_exempt
 class DownloadSecondDerivativeData(APIView):
     def get(self, request):
         file_path = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Second_saved_files/second_derivative_data.xlsx"
@@ -170,7 +167,6 @@ class DownloadSecondDerivativeData(APIView):
             return HttpResponseBadRequest("File not found.")
 
 
-@csrf_exempt
 class ThirdDerivativeGraphView(APIView):
     permission_classes = [AllowAny]
 
@@ -238,7 +234,6 @@ class ThirdDerivativeGraphView(APIView):
         return JsonResponse(response_data)
 
 
-@csrf_exempt
 class ThirdSaveDerivativeData(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -270,7 +265,6 @@ class ThirdSaveDerivativeData(APIView):
         return JsonResponse({"success": True, "download_url": "/api/download_third_derivative_data/"})
 
 
-@csrf_exempt
 class DownloadThirdDerivativeData(APIView):
     def get(self, request):
         file_path = "/Users/wakiryoutarou/Dropbox/NIV_app/mybackend/Third_saved_files/third_derivative_data.xlsx"
@@ -343,7 +337,6 @@ class FourthDerivativeGraphView(APIView):
         return JsonResponse(response_data)
 
 
-@csrf_exempt
 class FourthSaveDerivativeData(APIView):
     def post(self, request):
         saved_file_path = request.data.get('file_path')
@@ -722,7 +715,6 @@ class FileUploadView(APIView):
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
 def dynamic_graph_view(request):
     if request.method == "POST":
         # POSTリクエストの場合の処理
@@ -742,7 +734,6 @@ def dynamic_graph_view(request):
         return JsonResponse({"message": "Only POST method is allowed"}, status=400)
 
 
-@csrf_exempt
 def find_peaks(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -752,7 +743,6 @@ def find_peaks(request):
         return JsonResponse({'error': 'Only POST method is allowed'})
 
 
-@csrf_exempt
 def calculate_hb_strength(request):
     if request.method == 'POST':
         data = json.loads(request.body)
