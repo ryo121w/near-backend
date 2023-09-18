@@ -80,12 +80,5 @@ urlpatterns = [
          name='advanced_spectrum_analysis'),
     path('api/gaussian/', views.gaussian_integral),
 
-    path('api/create/', UserCreate.as_view(), name='user-create'),
-    path('api/user_login/', LoginView.as_view(), name='login'),
-
-    # LogIn
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-
 
 ]

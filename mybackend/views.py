@@ -19,12 +19,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from rest_framework.parsers import FormParser
-from rest_framework import status, views
+from rest_framework import status, viewssets
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
@@ -45,19 +46,17 @@ import matplotlib
 matplotlib.use('Agg')  # GUIが不要なバックエンド
 
 
+@api_view(['GET', 'POST'])
 def my_view(request):
     response = HttpResponse("Here's the text of the Web page.")
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
 
-@csrf_exempt
+@api_view(['GET', 'POST'])
 class SpectrumViewSet(viewsets.ModelViewSet):
     queryset = Spectrum.objects.all().order_by('wavelength')
     serializer_class = SpectrumSerializer
-
-
-logger = logging.getLogger(__name__)
 
 
 @csrf_exempt
