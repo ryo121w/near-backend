@@ -22,7 +22,7 @@ from django.urls import path, re_path
 from django.views.generic import TemplateView
 
 router = DefaultRouter()
-router.register(r'spectrums', SpectrumViewSet)
+router.register(r'spectrums', SpectrumViewSet, basename='spectrum')
 
 
 urlpatterns = [

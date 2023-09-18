@@ -26,7 +26,8 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from rest_framework.parsers import FormParser
 from rest_framework import status, viewsets
-from rest_framework import viewsets
+from .models import Spectrum  # もしくは from mybackend.models import Spectrum
+from rest_framework import serializers
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
 from .models import UploadedFile
